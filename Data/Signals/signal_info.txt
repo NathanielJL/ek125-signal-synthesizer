@@ -1,0 +1,38 @@
+========================================
+SIGNAL SYNTHESIZER - DATA INFORMATION
+========================================
+
+SIGNAL GENERATION PARAMETERS:
+------------------------------------
+Duration: 10 seconds
+Sampling Rate: 100 Hz
+Total Samples per Signal: 1000
+Time Step: 0.010 seconds
+
+FREQUENCIES:
+------------------------------------
+Low Frequency: 1 Hz (1 cycle per second)
+Medium Frequency: 5 Hz (5 cycles per second)
+High Frequency: 10 Hz (10 cycles per second)
+
+SIGNAL TYPES:
+------------------------------------
+1. Sine Wave: A * sin(2*pi*f*t)
+   Amplitude: 1.0
+
+2. Square Wave: sign(sin(2*pi*f*t))
+   Amplitude: ±1.0
+
+3. Triangle Wave: Custom linear ramps
+   Amplitude: ±1.0
+
+NOISE CONDITIONS:
+------------------------------------
+Scenario A - Clean: No noise (0.0)
+Scenario B - Low Noise: 0.1 amplitude (10%)
+Scenario C - High Noise: 0.5 amplitude (50%)
+
+CSV COLUMNS:
+------------------------------------
+Time | Sine1Hz | Sine5Hz | Sine10Hz | Square1Hz | Square5Hz | Square10Hz | Tri1Hz | Tri5Hz | Tri10Hz
+
