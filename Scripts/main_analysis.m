@@ -1,9 +1,6 @@
 % MAIN_ANALYSIS - Signal Processing and Analysis for Signal Synthesizer
 %
-% Team Members: Nathaniel Lee (Data Manager)
-%               Kacper (Algorithm Developer)
-%               Suvanjal Dhungana (Visualization Specialist)
-%
+% Team Members: Kacper (Algorithm Developer)
 % Date: April 2026
 %
 % Description:
