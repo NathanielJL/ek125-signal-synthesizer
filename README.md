@@ -160,12 +160,16 @@ Where `randn()` produces normally distributed random values with mean 0 and stan
 
 **Steps:**
 
-1. Navigate to the project directory in MATLAB
-2. Run the data generation script:
+1. Navigate to the project root directory in MATLAB
+2. Add the Scripts folder to the MATLAB path:
+```matlab
+   addpath('Scripts')
+```
+3. Run the data generation script:
    ```matlab
    generate_data
    ```
-3. Verify CSV files are created in `Data/Signals/{Clean, LowNoise, HighNoise}/`
+4. Verify CSV files are created in `Data/Signals/{Clean, LowNoise, HighNoise}/`
 
 **Expected Output:**
 - 3 CSV files (clean_signals.csv, low_noise_signals.csv, high_noise_signals.csv)
