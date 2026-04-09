@@ -9,8 +9,8 @@ This project implements **Option 2: Signal Synthesizer**.The goal is to create a
 | Name | Role |
 |------|------|
 | Nathaniel Lee | Data Manager |
-| [Team Member 2] | Algorithm Developer |
-| [Team Member 3] | Visualization Specialist |
+| Kacper Wajler | Algorithm Developer |
+| Suvanjal Dhungana | Visualization Specialist |
 
 ## Project Structure
 
@@ -172,8 +172,26 @@ Where `randn()` produces normally distributed random values with mean 0 and stan
 - 1 metadata file (signal_info.txt)
 - Each CSV: 1000 rows × 10 columns
 
-### Part 2: Analysis (Algorithm Developer)
+### Part 2: Analysis 
 
+**Steps:**
+
+1. Make sure Part 1 has been run first and all CSV files exist in Data/Signals/
+2. Navigate to the project root directory in MATLAB
+3. Add the Scripts folder to the MATLAB path:
+```matlab
+   addpath('Scripts')
+```
+4. Run the analysis script:
+```matlab
+   main_analysis
+```
+
+**Expected Output:**
+- analysis_results.mat (full workspace)
+- summary_statistics.csv (metrics for all 9 signals)
+- viz_data.mat (variables for visualization script)
+- Console output showing RMS, peak-to-peak, zero crossings, and filter results
 
 
 ### Part 3: Visualization (Visualization Specialist)
@@ -181,6 +199,12 @@ Where `randn()` produces normally distributed random values with mean 0 and stan
 
 
 ### Reflection Questions
+
+**Algorithm Developer (Kacper Wajler):**
+- What tools or strategies helped you troubleshoot or extend your code? 
+- How did you ensure your script was well-documented and reusable?
+
+Testing every section helped catch issues early, like making sure file paths were correct before running the complete analysis. Adding print statemetns helped greatly in verifing that results matched the expected values in each step. Clear variable names and comments made the scrip easier to follow and to resuse. 
 
 ---
 
