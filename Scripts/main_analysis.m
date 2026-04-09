@@ -1,6 +1,6 @@
 % MAIN_ANALYSIS - Signal Processing and Analysis for Signal Synthesizer
 %
-% Team Members: Kacper (Algorithm Developer)
+% Team Members: Kacper Wajler (Algorithm Developer)
 % Date: April 2026
 %
 % Description:
