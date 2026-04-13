@@ -3,6 +3,8 @@
 % Description:
 %   Generates all required figures and saves them as PNG files
 
+run('Scripts/Visualization/create_figures.m')
+
 clear; clc; close all;
 
 % Create Figures folder if it doesn't exist
