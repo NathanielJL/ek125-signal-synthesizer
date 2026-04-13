@@ -385,7 +385,13 @@ The decision to include all 27 signals (3 types × 3 frequencies × 3 scenarios)
 
 Testing every section helped catch issues early, like making sure file paths were correct before running the complete analysis. Adding print statements helped greatly in verifying that results matched the expected values in each step. Clear variable names and comments made the script easier to follow and to reuse.
 
+## Visualization Specialist (Suvanjal Dhungana):\
+
+**What design choices did you make to effectively communicate your results? How did you decide which types of plots were most appropriate?
+   
+   I chose different plot types based on what I needed to show: line plots for how signals change over time and bar charts for comparing values like RMS and peak-to-peak. I used subplots and consistent axis limits so it was easy to directly compare clean, low-noise, and high-noise signals without distortion. I also included titles, labels, legends, and grids to make the results clear and easy to interpret.
 ---
+
 
 ## Workspace Documentation
 
