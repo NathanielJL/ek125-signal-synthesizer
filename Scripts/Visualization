@@ -104,7 +104,7 @@ saveas(gcf, fullfile('Results','Figures','filtering_effect.png'))
 
 figure('Position', [100, 100, 1200, 800]);
 
-% ---- Panel 1: Degradation ----
+%Panel 1: Degradation
 subplot(2,2,1)
 bar([degrade_high_col(1), degrade_high_col(2), degrade_high_col(3)])
 title('Degradation vs Frequency (Sine)')
@@ -112,7 +112,7 @@ xlabel('Frequency Index (1Hz,5Hz,10Hz)')
 ylabel('Degradation (%)')
 grid on
 
-% ---- Panel 2: Zero Crossings ----
+%Panel 2: Zero Crossings
 subplot(2,2,2)
 bar([zc_clean_sine1, zc_low_sine1, zc_high_sine1])
 set(gca,'XTickLabel',{'Clean','Low','High'})
@@ -120,7 +120,7 @@ title('Zero Crossings (1 Hz Sine)')
 ylabel('Count')
 grid on
 
-% ---- Panel 3: Peak-to-Peak ----
+% Panel 3: Peak-to-Peak
 subplot(2,2,3)
 bar([p2p_clean_col(1), p2p_high_col(1)])
 set(gca,'XTickLabel',{'Clean','High Noise'})
@@ -128,7 +128,7 @@ title('Peak-to-Peak Comparison (1 Hz Sine)')
 ylabel('Amplitude')
 grid on
 
-% ---- Panel 4: Filtering Effectiveness ----
+%Panel 4: Filtering Effectiveness
 subplot(2,2,4)
 bar([rms_before, rms_after, rms_clean_ref])
 set(gca,'XTickLabel',{'Before','After','Clean'})
