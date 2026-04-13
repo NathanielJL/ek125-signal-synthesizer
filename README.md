@@ -200,7 +200,7 @@ Figures are generated as part of the analysis script and saved to `Results/Figur
 
 ## PART 1: Data Generation - Completion Checklist
 
-✅ **Data Manager (Nathaniel Lee) Deliverables:**
+**Data Manager (Nathaniel Lee) Deliverables:**
 
 - ✓ `generate_data.m` script created and documented
 - ✓ Generates three signal types (sine, square, triangle)
