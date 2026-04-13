@@ -390,7 +390,9 @@ Testing every section helped catch issues early, like making sure file paths wer
 **What design choices did you make to effectively communicate your results? How did you decide which types of plots were most appropriate?
    
    I chose different plot types based on what I needed to show: line plots for how signals change over time and bar charts for comparing values like RMS and peak-to-peak. I used subplots and consistent axis limits so it was easy to directly compare clean, low-noise, and high-noise signals without distortion. I also included titles, labels, legends, and grids to make the results clear and easy to interpret.
+   
 ---
+
 
 
 ## Workspace Documentation
