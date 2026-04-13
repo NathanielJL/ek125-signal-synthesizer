@@ -1,8 +1,5 @@
 % visualization.m
-% Purpose: Generate all required visualizations for signal processing project
-% Author Name: Suvanjal Dhungana
-% Inputs: Results/viz_data.mat (processed signal data and metrics)
-% Outputs: PNG figures saved in Results/Figures/
+% Loads processed data and creates all required figures for the project
 
 clear; clc;
 
@@ -12,21 +9,17 @@ if ~exist(figDir, 'dir')
     mkdir(figDir);
 end
 
-% Load processed data
-dataFile = fullfile('Results', 'viz_data.mat');
-if ~isfile(dataFile)
-    error('Processed data file viz_data.mat not found. Run main_analysis.m first.');
-end
-load(dataFile);
+% Load processed data for visualization
+load(fullfile('Results', 'viz_data.mat'));
 
 % Assumptions on loaded variables:
 % time - time vector
 % cleanData, lowNoiseData, highNoiseData - structs with signals (e.g., sine1Hz, square1Hz, tri1Hz)
 % rmsValues - 3x3x3 matrix (scenario x waveType x frequency)
 % degradationHighNoise - 3x3 matrix (waveType x frequency)
-% zeroCrossings - struct or matrix with zero crossing counts
+% zeroCrossings - struct with fields: clean, lowNoise, highNoise (each 1x3 arrays for sine, square, tri)
 % peakToPeakValues - matrix scenario x waveType at 1 Hz
-% filteredSignal - filtered version of a high noise signal
+% filteredSignal - filtered high noise signal (e.g., sine1Hz)
 % rmsBeforeFiltering, rmsAfterFiltering - RMS values before and after filtering
 
 %% Figure 1: Multi-Scenario Comparison for 1 Hz Sine Wave
