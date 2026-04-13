@@ -1,134 +1,139 @@
-% visualization.m
-% Loads processed data and creates all required figures for the project
+% CREATE_FIGURES - Visualization Script
+% Author Name: Suvanjal Dhungana 
+% Description:
+%   Generates all required figures and saves them as PNG files
 
-clear; clc;
+clear; clc; close all;
 
-% Create output directory if it doesn't exist
-figDir = fullfile('Results', 'Figures');
-if ~exist(figDir, 'dir')
-    mkdir(figDir);
+% Create Figures folder if it doesn't exist
+if ~isfolder(fullfile('Results','Figures'))
+    mkdir(fullfile('Results','Figures'));
 end
 
-% Load processed data for visualization
-load(fullfile('Results', 'viz_data.mat'));
+% Load visualization data
+load(fullfile('Results','viz_data.mat'));
 
-% Assumptions on loaded variables:
-% time - time vector
-% cleanData, lowNoiseData, highNoiseData - structs with signals (e.g., sine1Hz, square1Hz, tri1Hz)
-% rmsValues - 3x3x3 matrix (scenario x waveType x frequency)
-% degradationHighNoise - 3x3 matrix (waveType x frequency)
-% zeroCrossings - struct with fields: clean, lowNoise, highNoise (each 1x3 arrays for sine, square, tri)
-% peakToPeakValues - matrix scenario x waveType at 1 Hz
-% filteredSignal - filtered high noise signal (e.g., sine1Hz)
-% rmsBeforeFiltering, rmsAfterFiltering - RMS values before and after filtering
-
-%% Figure 1: Multi-Scenario Comparison for 1 Hz Sine Wave
 figure;
-scenarios = {'Clean', 'Low Noise', 'High Noise'};
-signals = {cleanData.sine1Hz, lowNoiseData.sine1Hz, highNoiseData.sine1Hz};
-for i = 1:3
-    subplot(3,1,i)
-    plot(time, signals{i}, 'b')
-    ylim([-2 2])
-    title(['1 Hz Sine Wave - ' scenarios{i}])
-    xlabel('Time (s)')
-    ylabel('Amplitude')
-    grid on
-end
-saveas(gcf, fullfile(figDir, 'scenario_comparison.png'))
 
-%% Figure 2: Frequency Comparison (Clean Sine Waves)
-figure; hold on;
-plot(time, cleanData.sine1Hz, 'r-', 'DisplayName', '1 Hz')
-plot(time, cleanData.sine5Hz, 'g--', 'DisplayName', '5 Hz')
-plot(time, cleanData.sine10Hz, 'b:', 'DisplayName', '10 Hz')
-xlim([0 2])
-title('Clean Sine Waves at Different Frequencies')
-xlabel('Time (s)')
+subplot(3,1,1)
+plot(t, clean_sine1)
+title('Clean Signal (1 Hz Sine)')
 ylabel('Amplitude')
-legend('Location', 'best')
 grid on
-hold off
-saveas(gcf, fullfile(figDir, 'frequency_comparison.png'))
+ylim([-2 2])
 
-%% Figure 3: RMS Bar Chart at 1 Hz Across Wave Types and Scenarios
-rms_1Hz = squeeze(rmsValues(:, :, 1));  % scenarios x waveTypes
+subplot(3,1,2)
+plot(t, low_sine1)
+title('Low Noise Signal (1 Hz Sine)')
+ylabel('Amplitude')
+grid on
+ylim([-2 2])
+
+subplot(3,1,3)
+plot(t, high_sine1)
+title('High Noise Signal (1 Hz Sine)')
+xlabel('Time (seconds)')
+ylabel('Amplitude')
+grid on
+ylim([-2 2])
+
+sgtitle('Scenario Comparison: 1 Hz Sine Wave')
+
+saveas(gcf, fullfile('Results','Figures','scenario_comparison.png'))
+
 figure;
-bar(rms_1Hz)
-set(gca, 'XTickLabel', scenarios)
+
+plot(t, clean_sine1)
+hold on
+plot(t, clean_sine5)
+plot(t, clean_sine10)
+
+xlim([0 2])
+
+title('Frequency Comparison of Clean Sine Waves')
+xlabel('Time (seconds)')
+ylabel('Amplitude')
+legend('1 Hz','5 Hz','10 Hz')
+grid on
+
+saveas(gcf, fullfile('Results','Figures','frequency_comparison.png'))
+
+figure;
+
+% Rows = scenarios, Columns = signal types
+rms_matrix = [
+    rms_clean_col(1) rms_clean_col(4) rms_clean_col(7);
+    rms_low_col(1)   rms_low_col(4)   rms_low_col(7);
+    rms_high_col(1)  rms_high_col(4)  rms_high_col(7)
+];
+
+bar(rms_matrix)
+
+set(gca, 'XTickLabel', {'Clean','Low Noise','High Noise'})
+
+title('RMS Comparison (1 Hz Signals)')
 xlabel('Scenario')
 ylabel('RMS Value')
-title('RMS Comparison at 1 Hz Across Wave Types')
-legend({'Sine', 'Square', 'Triangle'}, 'Location', 'best')
-grid on
-saveas(gcf, fullfile(figDir, 'quality_metrics.png'))
+legend('Sine','Square','Triangle')
 
-%% Figure 4: Before and After Filtering (High Noise Signal)
+grid on
+
+saveas(gcf, fullfile('Results','Figures','quality_metrics.png'))
 figure;
+
 subplot(2,1,1)
-plot(time, highNoiseData.sine1Hz, 'r')
+plot(t, high_sine1)
 xlim([0 3])
-title('High Noise Signal Before Filtering')
-xlabel('Time (s)')
+title('High Noise Signal (Before Filtering)')
 ylabel('Amplitude')
 grid on
 
 subplot(2,1,2)
-plot(time, filteredSignal, 'b', 'DisplayName', 'Filtered')
+plot(t, filtered_signal)
 hold on
-plot(time, cleanData.sine1Hz, 'k--', 'DisplayName', 'Clean Reference')
-hold off
+plot(t, clean_sine1)
 xlim([0 3])
-title('Signal After Moving Average Filtering')
-xlabel('Time (s)')
+
+title('After Filtering vs Clean Signal')
+xlabel('Time (seconds)')
 ylabel('Amplitude')
-legend('Location', 'best')
+legend('Filtered','Clean')
 grid on
-saveas(gcf, fullfile(figDir, 'filtering_effect.png'))
 
-%% Figure 5: Comprehensive Dashboard (2x2 Subplots)
-figure;
+saveas(gcf, fullfile('Results','Figures','filtering_effect.png'))
 
-% Panel 1: Signal degradation percentage (High Noise)
+figure('Position', [100, 100, 1200, 800]);
+
+% ---- Panel 1: Degradation ----
 subplot(2,2,1)
-bar(degradationHighNoise')  % frequencies on x-axis
-set(gca, 'XTickLabel', {'1 Hz', '5 Hz', '10 Hz'})
-xlabel('Frequency')
+bar([degrade_high_col(1), degrade_high_col(2), degrade_high_col(3)])
+title('Degradation vs Frequency (Sine)')
+xlabel('Frequency Index (1Hz,5Hz,10Hz)')
 ylabel('Degradation (%)')
-title('Signal Degradation by Frequency (High Noise)')
-legend({'Sine', 'Square', 'Triangle'}, 'Location', 'best')
 grid on
 
-% Panel 2: Zero crossings for 1 Hz signals
+% ---- Panel 2: Zero Crossings ----
 subplot(2,2,2)
-bar([zeroCrossings.clean; zeroCrossings.lowNoise; zeroCrossings.highNoise]')
-set(gca, 'XTickLabel', {'Sine', 'Square', 'Triangle'})
-xlabel('Wave Type')
-ylabel('Zero Crossings')
-title('Zero Crossings at 1 Hz Across Scenarios')
-legend(scenarios, 'Location', 'best')
+bar([zc_clean_sine1, zc_low_sine1, zc_high_sine1])
+set(gca,'XTickLabel',{'Clean','Low','High'})
+title('Zero Crossings (1 Hz Sine)')
+ylabel('Count')
 grid on
 
-% Panel 3: Peak-to-peak amplitude at 1 Hz
+% ---- Panel 3: Peak-to-Peak ----
 subplot(2,2,3)
-bar(peakToPeakValues')
-set(gca, 'XTickLabel', scenarios)
-xlabel('Scenario')
-ylabel('Peak-to-Peak Amplitude')
-title('Peak-to-Peak Amplitude at 1 Hz')
-legend({'Sine', 'Square', 'Triangle'}, 'Location', 'best')
+bar([p2p_clean_col(1), p2p_high_col(1)])
+set(gca,'XTickLabel',{'Clean','High Noise'})
+title('Peak-to-Peak Comparison (1 Hz Sine)')
+ylabel('Amplitude')
 grid on
 
-% Panel 4: Filtering effectiveness RMS before/after
+% ---- Panel 4: Filtering Effectiveness ----
 subplot(2,2,4)
-bar([rmsBeforeFiltering; rmsAfterFiltering]')
-set(gca, 'XTickLabel', {'Before', 'After'})
-xlabel('Filtering State')
+bar([rms_before, rms_after, rms_clean_ref])
+set(gca,'XTickLabel',{'Before','After','Clean'})
+title('Filtering Effect on RMS')
 ylabel('RMS Value')
-title('Filtering Effectiveness on RMS')
-legend({'High Noise Signal'}, 'Location', 'best')
 grid on
 
-saveas(gcf, fullfile(figDir, 'comprehensive_dashboard.png'))
-
-disp('All visualization figures created and saved successfully.');
+saveas(gcf, fullfile('Results','Figures','signal_dashboard.png'))
